@@ -1,71 +1,88 @@
 #include "../includes/push_swap.h"
 
-void     stack_to_array(t_app *app, t_stack *stack)
+t_list  *min(t_stack *stack)
 {
-    t_list  *current;
-    int     i;
-    int     stack_size;
+    t_list *min;
 
-    stack_size = ft_lstsize(stack->head);
-    app->array = malloc(sizeof(int) * stack_size);
-    if (!app->array)
-        error(app, "Malloc failed\n");
-    i = 0;
-    current = stack->head;
-    while (current)
+    min = stack->head;
+    for (t_list *current = stack->head; current; current = current->next)
     {
-        app->array[i] = *(int *)current->content;
-        current = current->next;
-        i++;
+        if (*(int *)current->content < *(int *)min->content)
+            min = current;
     }
+    return (min);
 }
 
-void    swap(int *a, int *b)
+void    move_min_to_top(t_stack *stack, int *moves)
 {
-    int     tmp;
+    t_list  *min_num;
+    int     min_index;
+    t_list  *tmp;
 
-    tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
-
-void    quick_sort(int *array, int start, int end, int stack_size)
-{
-    int     pivot;
-    int     left;
-    int     right;
-
-    if (end <= start || start < 0 || end > 0 ||
-        end >= stack_size || start >= stack_size)
-        return ;
-    pivot = array[end];
-    left = start;
-    right = end - 1;
-    while (left <= right)
+    min_num = min(stack);
+    min_index = 0;
+    tmp = stack->head;
+    while (tmp != min_num)
     {
-        while (array[left] < pivot)
-            left++;
-        while (array[right] > pivot)
-            right--;
-        if (left <= right)
+        tmp = tmp->next;
+        min_index++;
+    }
+    if (min_index == 0)
+        return ;
+    else if (min_index == 1)
+    {
+        swap_a(stack);
+        *moves += 1;
+    }
+    else if (min_index == ft_lstsize(stack->head) - 1)
+    {
+        reverse_rotate_a(stack);
+        *moves += 1;
+    }
+    else if (min_index < ft_lstsize(stack->head) / 2)
+    {
+        while (stack->head != min_num)
         {
-            swap(&array[left], &array[right]);
-            left++;
-            right--;
+            rotate_a(stack);
+            *moves += 1;
         }
     }
-    swap(&array[left], &array[end]);
-    quick_sort(array, start, left - 1, stack_size);
-    quick_sort(array, left + 1, end, stack_size);
+    else
+    {
+        while (stack->head != min_num)
+        {
+            reverse_rotate_a(stack);
+            *moves += 1;
+        }
+    }
+}
+
+void    sort_logic(t_app *app)
+{
+    int moves;
+
+    moves = 0;
+    while (app->stack_a->head)
+    {
+        move_min_to_top(app->stack_a, &moves);
+        push_b(app->stack_a, app->stack_b);
+        moves += 1;
+    }
+    while (app->stack_b->head)
+    {
+        push_a(app->stack_a, app->stack_b);
+        moves += 1;
+    }
+    printf("moves: %d\n", moves);
+    return ;
 }
 
 void    sort_stack(t_app *app)
 {
-    stack_to_array(app, app->stack_a);
 
     if (ft_lstsize(app->stack_a->head) == 2)
     {
-        if (app->array[0] > app->array[1])
+        if (*(int *)app->stack_a->head->content > *(int *)app->stack_a->head->next->content)
             swap_a(app->stack_a);
         return ;
     }
@@ -77,11 +94,6 @@ void    sort_stack(t_app *app)
         if (*(int *)app->stack_a->head->content > *(int *)app->stack_a->head->next->content)
             swap_a(app->stack_a);
     }
-
-    quick_sort(app->array, 0, ft_lstsize(app->stack_a->head) - 1, ft_lstsize(app->stack_a->head));
-
-    //debug
-    for (int i = 0; i < ft_lstsize(app->stack_a->head); i++)
-        printf("%d\n", app->array[i]);
+    else
+        sort_logic(app);
 }
-

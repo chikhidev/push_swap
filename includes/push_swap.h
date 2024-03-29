@@ -20,7 +20,6 @@ typedef struct s_app
 {
     t_stack *stack_a;
     t_stack *stack_b;
-    int     *array;
 }	t_app;
 
 /*____________prototypes____________*/
@@ -32,6 +31,7 @@ void    free_stacks(t_app *app);
 /*validation*/
 int     is_overflowed_num(char  *expected, int  actual);
 int     is_num(char *str);
+int     is_sorted(t_stack *stack);
 
 /*stack*/
 void    add_num(t_app *app, t_stack *stack, int num);
@@ -39,7 +39,7 @@ void    fill_stack_a(t_app *app, int ac, char **av);
 
 /*sort*/
 void    sort_stack(t_app *app);
-
+void    sort_logic(t_app *app);
 
 /*____actions____*/
 

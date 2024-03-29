@@ -6,7 +6,6 @@ void    init(t_app *app)
     app->stack_a->head = NULL;
     app->stack_b = malloc(sizeof(t_stack));
     app->stack_b->head = NULL;
-    app->array = NULL;
 }
 
 int is_sorted(t_stack *stack)
@@ -42,13 +41,6 @@ int main(int ac, char **av)
         return (0);
     }
 
-    printf("before sort--------------\n");
-    for (t_list *current = app.stack_a->head; current; current = current->next)
-    {
-        printf("%d\n", *(int *)current->content);
-    }
-
-    printf("moves_____________\n");
 
     sort_stack(&app);
 

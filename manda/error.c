@@ -6,7 +6,6 @@ void    free_stacks(t_app *app)
     ft_lstclear(&app->stack_b->head, free);
     free(app->stack_a);
     free(app->stack_b);
-    free(app->array);
 }
 
 /**
