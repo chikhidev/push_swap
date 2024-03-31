@@ -44,13 +44,12 @@ int main(int ac, char **av)
 
     sort_stack(&app);
 
-    printf("_____________\nafter sort--------------\n");
-
+    printf(YELLOW"\tstack a\n");
     for (t_list *current = app.stack_a->head; current; current = current->next)
-    {
-        printf("%d\n", *(int *)current->content);
-    }
+        printf("\t%d\n", *(int *)current->content);
+    printf(RESET);
 
+    is_sorted(app.stack_a) ? printf(GREEN "stack is sorted\n"RESET) : printf(RED"stack is not sorted\n"RESET);
     free_stacks(&app);
 
 }

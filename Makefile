@@ -9,7 +9,9 @@ SRC = 	manda/main.c \
 		manda/error.c \
 		manda/validation.c \
 		manda/stack.c \
-		manda/sort.c
+		manda/sort.c \
+		manda/sort2.c \
+		manda/actions.c
 
 SRC += $(OPS_SRC)
 OBJ = $(SRC:.c=.o)
@@ -22,6 +24,7 @@ ORANGE = \033[0;33m
 
 all: $(NAME)
 b: all clean
+	@clear
 
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "$(GREEN)Compiling $(NAME) 👾...$(RESET)"

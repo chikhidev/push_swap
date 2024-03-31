@@ -4,8 +4,11 @@
 # include <stdio.h>
 # include <unistd.h>
 
-#define SUCESS 0
-#define ERROR 1
+#define RED "\033[0;31m"
+#define GREEN "\033[0;32m"
+#define YELLOW "\033[0;33m"
+#define BLUE "\033[0;34m"
+#define RESET "\033[0m"
 
 #include "../libft/libft.h"
 
@@ -20,6 +23,8 @@ typedef struct s_app
 {
     t_stack *stack_a;
     t_stack *stack_b;
+    t_stack *stack_a_copy;
+    t_stack *stack_b_copy;
 }	t_app;
 
 /*____________prototypes____________*/
@@ -34,14 +39,21 @@ int     is_num(char *str);
 int     is_sorted(t_stack *stack);
 
 /*stack*/
+int     *stack_to_array(t_app *app, t_stack *stack);
 void    add_num(t_app *app, t_stack *stack, int num);
 void    fill_stack_a(t_app *app, int ac, char **av);
 
 /*sort*/
+void    quick_sort(int *array, int start, int end);
 void    sort_stack(t_app *app);
 void    sort_logic(t_app *app);
 
 /*____actions____*/
+
+/*my actions*/
+int     index_of(int *array, int looking_for, int size);
+void    move_to_top(t_app *app, t_stack *stack, t_list *node, int *moves_counter);
+void    move_to_pos(t_app *app, t_stack *stack, int pos, int *moves_counter);
 
 /*push actions*/
 void    push_a(t_stack *stack_a, t_stack *stack_b);
