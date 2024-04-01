@@ -79,28 +79,11 @@ void	sort_five(t_app *app)
 int get_perfect_offset(t_app *app)
 {
     if (ft_lstsize(app->stack_a->head) <= 100)
-        return (ft_lstsize(app->stack_a->head) / 5 + 1);
+        return 5;
     else if (ft_lstsize(app->stack_a->head) <= 500)
-        return (ft_lstsize(app->stack_a->head) / 11 + 1);
+        return 10;
     else
-        return (ft_lstsize(app->stack_a->head) / 50 + 1);
-}
-
-int index_of(t_stack *stack, int num)
-{
-    int i;
-    t_list *current;
-
-    i = 0;
-    current = stack->head;
-    while (current)
-    {
-        if (*(int *)current->content == num)
-            return (i);
-        current = current->next;
-        i++;
-    }
-    return (-1);
+        return 20;
 }
 
 int is_in_range(int *array, int start, int end, int num)
@@ -133,24 +116,39 @@ void    sort_logic(t_app *app)
     t_list *current;
     t_list  *b_max;
     int     i;
+    int     array_size;
 
     /*step 1 generate array and sort it*/
     array = stack_to_array(app, app->stack_a);
-    quick_sort(array, 0, ft_lstsize(app->stack_a->head) - 1);
+    array_size = ft_lstsize(app->stack_a->head);
+    quick_sort(array, 0, array_size - 1);
 
     /*referance the mid, offset*/
-    app->mid = array[(ft_lstsize(app->stack_a->head) / 2) - 1];
+    app->mid = array[(array_size / 2) - 1];
     app->offset = get_perfect_offset(app);
     app->start = app->mid - app->offset;
     app->end = app->mid + app->offset;
+    if (app->start < 0)
+            app->start = 0;
+    if (app->end > array_size - 1)
+        app->end = array_size - 1;
     /*step 2 push to stack_b*/
+
+    /*print the array*/
+    // printf(BLUE"array: [");
+    // for (int i = 0; i < array_size; i++)
+    //     printf("%d ", array[i]);
+    // printf("]\n"RESET);
+
     while (app->stack_a->head)
     {
+        // printf("start %d, end %d, mid %d, offset %d\n", app->start, app->end, app->mid, app->offset);
         current = app->stack_a->head;
         while (current)
         {
-            if (!contains(app->stack_b, array, app->start, app->end))
+            if (!contains(app->stack_a, array, app->start, app->end))
                 break ;
+            // printf("current %d\n", *(int *)current->content);
             if (is_in_range(array, app->start, app->end, *(int *)current->content))
             {
                 move_to_top(app, app->stack_a, current, NULL);
@@ -160,14 +158,40 @@ void    sort_logic(t_app *app)
             }
             else
                 rotate_a(app->stack_a);
+            current = app->stack_a->head;
+
+            /*dispay stacks*/
+            // printf(YELLOW"stack a\t|\tstack b\n");
+            // for (t_list *a = app->stack_a->head, *b = app->stack_b->head; a || b; a = a ? a->next : NULL, b = b ? b->next : NULL)
+            // {
+            //     if (a)
+            //         printf("%d\t|\t", *(int *)a->content);
+            //     else
+            //         printf("\t|\t");
+            //     if (b)
+            //         printf("%d\n", *(int *)b->content);
+            //     else
+            //         printf("\n");
+            // }
+            // printf("____________________\n"RESET);
+            // printf(RESET);
         }
+
         app->start -= app->offset;
         app->end += app->offset;
         if (app->start < 0)
             app->start = 0;
-        if (app->end > ft_lstsize(app->stack_a->head) - 1)
-            app->end = ft_lstsize(app->stack_a->head) - 1;
+        // printf("end %d, size %d\n", app->end, array_size - 1);
+        if (app->end > array_size - 1)
+            app->end = array_size - 1;
+
+
+        // printf("(new) start %d, end %d, mid %d, offset %d\n", app->start, app->end, app->mid, app->offset);
+        // return ;
     }
+
+    // printf(RED"____________________Pushing to stack b done____________________\n"RESET);
+    // printf(GREEN"____________________Returning to stack a____________________\n"RESET);
 
     /*step 3 push biggest and so on from b to a*/
     i = ft_lstsize(app->stack_a->head) - 1;
@@ -186,6 +210,21 @@ void    sort_logic(t_app *app)
             move_to_top(app, app->stack_b, b_max, NULL);
             push_a(app->stack_a, app->stack_b);
         }
+        /*dispay stacks*/
+        // printf(YELLOW"stack a\t|\tstack b\n");
+        // for (t_list *a = app->stack_a->head, *b = app->stack_b->head; a || b; a = a ? a->next : NULL, b = b ? b->next : NULL)
+        // {
+        //     if (a)
+        //         printf("%d\t|\t", *(int *)a->content);
+        //     else
+        //         printf("\t|\t");
+        //     if (b)
+        //         printf("%d\n", *(int *)b->content);
+        //     else
+        //         printf("\n");
+        // }
+        // printf("____________________\n"RESET);
+        // printf(RESET);
     }
 }
 

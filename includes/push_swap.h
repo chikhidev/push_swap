@@ -4,8 +4,11 @@
 # include <stdio.h>
 # include <unistd.h>
 
-#define SUCESS 0
-#define ERROR 1
+#define RED "\033[0;31m"
+#define GREEN "\033[0;32m"
+#define YELLOW "\033[0;33m"
+#define BLUE "\033[0;34m"
+#define RESET "\033[0m"
 
 #include "../libft/libft.h"
 
@@ -50,7 +53,7 @@ void    quick_sort(int *array, int start, int end);
 int     *stack_to_array(t_app *app, t_stack *stack);
 
 /*____actions____*/
-
+int     index_of(int *array, int num, int size);
 void    move_to_top(t_app *app, t_stack *stack, t_list *node, int *moves_counter);
 void    move_to_pos(t_app *app, t_stack *stack, int pos, int *moves_counter);
 

@@ -24,6 +24,7 @@ ORANGE = \033[0;33m
 
 all: $(NAME)
 b: all clean
+	@clear
 
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "$(GREEN)Compiling $(NAME) 👾...$(RESET)"
