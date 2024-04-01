@@ -13,48 +13,17 @@ t_list  *min(t_stack *stack)
     return (min);
 }
 
-void    move_min_to_top(t_stack *stack, int *moves)
+t_list  *max(t_stack *stack)
 {
-    t_list  *min_num;
-    int     min_index;
-    t_list  *tmp;
+    t_list *max;
 
-    min_num = min(stack);
-    min_index = 0;
-    tmp = stack->head;
-    while (tmp != min_num)
+    max = stack->head;
+    for (t_list *current = stack->head; current; current = current->next)
     {
-        tmp = tmp->next;
-        min_index++;
+        if (*(int *)current->content > *(int *)max->content)
+            max = current;
     }
-    if (min_index == 0)
-        return ;
-    else if (min_index == 1)
-    {
-        swap_a(stack);
-        *moves += 1;
-    }
-    else if (min_index == ft_lstsize(stack->head) - 1)
-    {
-        reverse_rotate_a(stack);
-        *moves += 1;
-    }
-    else if (min_index < ft_lstsize(stack->head) / 2)
-    {
-        while (stack->head != min_num)
-        {
-            rotate_a(stack);
-            *moves += 1;
-        }
-    }
-    else
-    {
-        while (stack->head != min_num)
-        {
-            reverse_rotate_a(stack);
-            *moves += 1;
-        }
-    }
+    return (max);
 }
 
 void    sort_three(t_app *app)
@@ -107,29 +76,121 @@ void	sort_five(t_app *app)
         push_a(app->stack_a, app->stack_b);
 }
 
+int get_perfect_offset(t_app *app)
+{
+    if (ft_lstsize(app->stack_a->head) <= 100)
+        return (ft_lstsize(app->stack_a->head) / 5 + 1);
+    else if (ft_lstsize(app->stack_a->head) <= 500)
+        return (ft_lstsize(app->stack_a->head) / 11 + 1);
+    else
+        return (ft_lstsize(app->stack_a->head) / 50 + 1);
+}
+
+int index_of(t_stack *stack, int num)
+{
+    int i;
+    t_list *current;
+
+    i = 0;
+    current = stack->head;
+    while (current)
+    {
+        if (*(int *)current->content == num)
+            return (i);
+        current = current->next;
+        i++;
+    }
+    return (-1);
+}
+
+int is_in_range(int *array, int start, int end, int num)
+{
+    for (int i = start; i <= end; i++)
+    {
+        if (array[i] == num)
+            return (1);
+    }
+    return (0);
+}
+
+int contains(t_stack *stack, int *array, int start, int end)
+{
+    t_list *current;
+
+    current = stack->head;
+    while (current)
+    {
+        if (is_in_range(array, start, end, *(int *)current->content))
+            return (1);
+        current = current->next;
+    }
+    return (0);
+}
+
 void    sort_logic(t_app *app)
 {
-    int moves;
+    int *array;
+    t_list *current;
+    t_list  *b_max;
+    int     i;
 
-    moves = 0;
+    /*step 1 generate array and sort it*/
+    array = stack_to_array(app, app->stack_a);
+    quick_sort(array, 0, ft_lstsize(app->stack_a->head) - 1);
+
+    /*referance the mid, offset*/
+    app->mid = array[(ft_lstsize(app->stack_a->head) / 2) - 1];
+    app->offset = get_perfect_offset(app);
+    app->start = app->mid - app->offset;
+    app->end = app->mid + app->offset;
+    /*step 2 push to stack_b*/
     while (app->stack_a->head)
     {
-        move_min_to_top(app->stack_a, &moves);
-        push_b(app->stack_a, app->stack_b);
-        moves += 1;
+        current = app->stack_a->head;
+        while (current)
+        {
+            if (!contains(app->stack_b, array, app->start, app->end))
+                break ;
+            if (is_in_range(array, app->start, app->end, *(int *)current->content))
+            {
+                move_to_top(app, app->stack_a, current, NULL);
+                push_b(app->stack_a, app->stack_b);
+                if (*(int *)current < app->mid && ft_lstsize(app->stack_b->head) > 1)
+                    rotate_b(app->stack_b);
+            }
+            else
+                rotate_a(app->stack_a);
+        }
+        app->start -= app->offset;
+        app->end += app->offset;
+        if (app->start < 0)
+            app->start = 0;
+        if (app->end > ft_lstsize(app->stack_a->head) - 1)
+            app->end = ft_lstsize(app->stack_a->head) - 1;
     }
+
+    /*step 3 push biggest and so on from b to a*/
+    i = ft_lstsize(app->stack_a->head) - 1;
     while (app->stack_b->head)
     {
-        push_a(app->stack_a, app->stack_b);
-        moves += 1;
+        if (*(int *)app->stack_b->head->content == array[i])
+        {
+            push_a(app->stack_a, app->stack_b);
+            if (ft_lstsize(app->stack_a->head) > 1)
+                rotate_a(app->stack_a);
+            i--;
+        }
+        else
+        {
+            b_max = max(app->stack_b);
+            move_to_top(app, app->stack_b, b_max, NULL);
+            push_a(app->stack_a, app->stack_b);
+        }
     }
-    printf("moves: %d\n", moves);
-    return ;
 }
 
 void    sort_stack(t_app *app)
 {
-
     if (ft_lstsize(app->stack_a->head) == 2)
     {
         if (*(int *)app->stack_a->head->content > *(int *)app->stack_a->head->next->content)

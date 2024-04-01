@@ -9,7 +9,9 @@ SRC = 	manda/main.c \
 		manda/error.c \
 		manda/validation.c \
 		manda/stack.c \
-		manda/sort.c
+		manda/sort.c \
+		manda/actions.c \
+		manda/sort2.c
 
 SRC += $(OPS_SRC)
 OBJ = $(SRC:.c=.o)

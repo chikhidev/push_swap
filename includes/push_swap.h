@@ -20,6 +20,10 @@ typedef struct s_app
 {
     t_stack *stack_a;
     t_stack *stack_b;
+    int     mid;
+    int     offset;
+    int     start;
+    int     end;
 }	t_app;
 
 /*____________prototypes____________*/
@@ -41,7 +45,14 @@ void    fill_stack_a(t_app *app, int ac, char **av);
 void    sort_stack(t_app *app);
 void    sort_logic(t_app *app);
 
+/*sort utils*/
+void    quick_sort(int *array, int start, int end);
+int     *stack_to_array(t_app *app, t_stack *stack);
+
 /*____actions____*/
+
+void    move_to_top(t_app *app, t_stack *stack, t_list *node, int *moves_counter);
+void    move_to_pos(t_app *app, t_stack *stack, int pos, int *moves_counter);
 
 /*push actions*/
 void    push_a(t_stack *stack_a, t_stack *stack_b);
