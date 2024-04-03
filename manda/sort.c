@@ -194,7 +194,6 @@ void    sort_logic(t_app *app)
     // printf(GREEN"____________________Returning to stack a____________________\n"RESET);
 
     /*step 3 push biggest and so on from b to a*/
-    // // exit(0);
     i = array_size - 1;
     while (app->stack_b->head)
     {
