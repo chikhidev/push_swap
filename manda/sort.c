@@ -79,11 +79,11 @@ void	sort_five(t_app *app)
 int get_perfect_offset(t_app *app)
 {
     if (ft_lstsize(app->stack_a->head) <= 100)
-        return 5;
+        return 12;
     else if (ft_lstsize(app->stack_a->head) <= 500)
-        return 10;
+        return 21;
     else
-        return 20;
+        return 31;
 }
 
 int is_in_range(int *array, int start, int end, int num)
@@ -194,7 +194,8 @@ void    sort_logic(t_app *app)
     // printf(GREEN"____________________Returning to stack a____________________\n"RESET);
 
     /*step 3 push biggest and so on from b to a*/
-    i = ft_lstsize(app->stack_a->head) - 1;
+    // // exit(0);
+    i = array_size - 1;
     while (app->stack_b->head)
     {
         if (*(int *)app->stack_b->head->content == array[i])
@@ -210,22 +211,23 @@ void    sort_logic(t_app *app)
             move_to_top(app, app->stack_b, b_max, NULL);
             push_a(app->stack_a, app->stack_b);
         }
-        /*dispay stacks*/
-        // printf(YELLOW"stack a\t|\tstack b\n");
-        // for (t_list *a = app->stack_a->head, *b = app->stack_b->head; a || b; a = a ? a->next : NULL, b = b ? b->next : NULL)
-        // {
-        //     if (a)
-        //         printf("%d\t|\t", *(int *)a->content);
-        //     else
-        //         printf("\t|\t");
-        //     if (b)
-        //         printf("%d\n", *(int *)b->content);
-        //     else
-        //         printf("\n");
-        // }
-        // printf("____________________\n"RESET);
-        // printf(RESET);
+    //     /*dispay stacks*/
+    //     // printf(YELLOW"stack a\t|\tstack b\n");
+    //     // for (t_list *a = app->stack_a->head, *b = app->stack_b->head; a || b; a = a ? a->next : NULL, b = b ? b->next : NULL)
+    //     // {
+    //     //     if (a)
+    //     //         printf("%d\t|\t", *(int *)a->content);
+    //     //     else
+    //     //         printf("\t|\t");
+    //     //     if (b)
+    //     //         printf("%d\n", *(int *)b->content);
+    //     //     else
+    //     //         printf("\n");
+    //     // }
+    //     // printf("____________________\n"RESET);
+    //     // printf(RESET);
     }
+    free(array);
 }
 
 void    sort_stack(t_app *app)

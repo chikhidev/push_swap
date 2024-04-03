@@ -51,8 +51,8 @@ int main(int ac, char **av)
     //     printf("%d\n", *(int *)current->content);
     // }
 
-    // is_sorted(app.stack_a) ? printf(GREEN"OK\n") : printf(RED"KO\n");
-    // printf(RESET);
+    is_sorted(app.stack_a) ? printf(GREEN"OK\n") : printf(RED"KO\n");
+    printf(RESET);
 
     free_stacks(&app);
 
