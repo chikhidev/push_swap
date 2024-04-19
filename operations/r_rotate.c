@@ -4,7 +4,7 @@
  * @param stack_a stack a
  * @details shift down all elements of stack a by 1
 */
-void    reverse_rotate_a(t_stack *stack_a)
+void    reverse_rotate_a(t_stack *stack_a, int  print)
 {
     t_list  *last;
     t_list  *tmp;
@@ -18,7 +18,8 @@ void    reverse_rotate_a(t_stack *stack_a)
     tmp->next = NULL;
     last->next = stack_a->head;
     stack_a->head = last;
-    write(1, "rra\n", 4);
+    if (print)
+        write(1, "rra\n", 4);
 }
 
 /**
@@ -26,7 +27,7 @@ void    reverse_rotate_a(t_stack *stack_a)
  * @param stack_b stack a
  * @details shift down all elements of stack a by 1
 */
-void    reverse_rotate_b(t_stack *stack_b)
+void    reverse_rotate_b(t_stack *stack_b, int print)
 {
     t_list  *last;
     t_list  *tmp;
@@ -40,7 +41,8 @@ void    reverse_rotate_b(t_stack *stack_b)
     tmp->next = NULL;
     last->next = stack_b->head;
     stack_b->head = last;
-    write(1, "rrb\n", 4);
+    if (print)
+        write(1, "rrb\n", 4);
 }
 
 /**
@@ -50,9 +52,10 @@ void    reverse_rotate_b(t_stack *stack_b)
  * @note reverse_rotate_ab = reverse_rotate_a + reverse_rotate_b
  * @details shift down all elements of stack a and stack b by 1
 */
-void    reverse_rotate_ab(t_stack *stack_a, t_stack *stack_b)
+void    reverse_rotate_ab(t_stack *stack_a, t_stack *stack_b, int print)
 {
-    reverse_rotate_a(stack_a);
-    reverse_rotate_b(stack_b);
-    write(1, "rrr\n", 4);
+    reverse_rotate_a(stack_a, 0);
+    reverse_rotate_b(stack_b, 0);
+    if (print)
+        write(1, "rrr\n", 4);
 }

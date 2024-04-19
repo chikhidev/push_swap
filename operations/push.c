@@ -3,7 +3,7 @@
 /**
  * @details push the first element of stack_b to stack_a
 */
-void    push_a(t_stack *stack_a, t_stack *stack_b)
+void    push_a(t_stack *stack_a, t_stack *stack_b, int print)
 {
     t_list  *tmp;
 
@@ -21,10 +21,11 @@ void    push_a(t_stack *stack_a, t_stack *stack_b)
         tmp->next = stack_a->head;
         stack_a->head = tmp;
     }
-    write(1, "pa\n", 3);
+    if (print)
+        write(1, "pa\n", 3);
 }
 
-void    push_b(t_stack *stack_a, t_stack *stack_b)
+void    push_b(t_stack *stack_a, t_stack *stack_b, int print)
 {
     t_list  *tmp;
 
@@ -42,5 +43,6 @@ void    push_b(t_stack *stack_a, t_stack *stack_b)
         tmp->next = stack_b->head;
         stack_b->head = tmp;
     }
-    write(1, "pb\n", 3);
+    if (print)
+        write(1, "pb\n", 3);
 }

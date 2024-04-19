@@ -11,12 +11,18 @@ void    init(t_app *app)
 int is_sorted(t_stack *stack)
 {
     t_list *current;
+    t_list *prev;
 
-    current = stack->head;
-    while (current->next)
+    if (ft_lstsize(stack->head) < 2)
+        return (1);
+
+    prev = stack->head;
+    current = stack->head->next;
+    while (current)
     {
-        if (*(int *)current->content > *(int *)current->next->content)
+        if (*(int *)prev->content > *(int *)current->content)
             return (0);
+        prev = current;
         current = current->next;
     }
     return (1);
@@ -51,8 +57,7 @@ int main(int ac, char **av)
     //     printf("%d\n", *(int *)current->content);
     // }
 
-    is_sorted(app.stack_a) ? printf(GREEN"OK\n") : printf(RED"KO\n");
-    printf(RESET);
+    // is_sorted(app.stack_a) ? printf(GREEN"OK\n"RESET) : printf(RED"KO\n"RESET);
 
     free_stacks(&app);
 

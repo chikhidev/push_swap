@@ -2,6 +2,18 @@
     "files.associations": {
         "push_swap.h": "c",
         "libft.h": "c",
-        "array": "c"
+        "array": "c",
+        "deque": "c",
+        "list": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "string_view": "c",
+        "format": "c",
+        "initializer_list": "c",
+        "span": "c",
+        "regex": "c",
+        "chrono": "c",
+        "functional": "c"
     }
 }
