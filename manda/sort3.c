@@ -1,14 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort3.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/20 19:22:12 by abchikhi          #+#    #+#             */
+/*   Updated: 2024/04/20 20:50:58 by abchikhi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
 t_list	*min(t_stack *stack)
 {
 	t_list	*min;
+	t_list	*current;
 
 	min = stack->head;
-	for (t_list *current = stack->head; current; current = current->next)
+	current = stack->head;
+	while (current)
 	{
 		if (*(int *)current->content < *(int *)min->content)
 			min = current;
+		current = current->next;
 	}
 	return (min);
 }
@@ -16,12 +31,15 @@ t_list	*min(t_stack *stack)
 t_list	*max(t_stack *stack)
 {
 	t_list	*max;
+	t_list	*current;
 
 	max = stack->head;
-	for (t_list *current = stack->head; current; current = current->next)
+	current = stack->head;
+	while (current)
 	{
 		if (*(int *)current->content > *(int *)max->content)
 			max = current;
+		current = current->next;
 	}
 	return (max);
 }

@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 18:01:08 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/04/20 18:01:09 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/04/20 20:54:03 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	index_of(t_stack *stack, t_list *node)
 void	move_to_top(t_app *app, t_stack *stack, t_list *node,
 		int *moves_counter)
 {
+	(void)moves_counter;
 	if (stack->head == node)
 		return ;
 	if (index_of(stack, node) <= ft_lstsize(stack->head) / 2)
@@ -42,8 +43,6 @@ void	move_to_top(t_app *app, t_stack *stack, t_list *node,
 				rotate_a(stack, 1);
 			else
 				rotate_b(stack, 1);
-			if (moves_counter)
-				(*moves_counter)++;
 		}
 	}
 	else
@@ -54,17 +53,6 @@ void	move_to_top(t_app *app, t_stack *stack, t_list *node,
 				reverse_rotate_a(stack, 1);
 			else
 				reverse_rotate_b(stack, 1);
-			if (moves_counter)
-				(*moves_counter)++;
 		}
 	}
 }
-
-/**
- * 5        34
- * 6        23
- * 42       -13
- * 83       60
-* -234      -89
- * 24
-*/

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/20 20:57:04 by abchikhi          #+#    #+#             */
+/*   Updated: 2024/04/20 20:58:12 by abchikhi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -57,13 +69,13 @@ void		sort_logic(t_app *app);
 void		sort_three(t_app *app);
 
 /*sort utils*/
-t_list	*min(t_stack *stack);
-t_list	*max(t_stack *stack);
-t_list	*smaller_and_close(t_stack *stack, int num);
-t_list	*bigger_and_close(t_stack *stack, int num);
-int		in_top(t_stack *stack, t_list *node);
-int		shortest_way(t_app *app, t_list *node, t_list *target);
-t_list	*node_at_idx(t_stack *stack, int idx);
+t_list		*min(t_stack *stack);
+t_list		*max(t_stack *stack);
+t_list		*smaller_and_close(t_stack *stack, int num);
+t_list		*bigger_and_close(t_stack *stack, int num);
+int			in_top(t_stack *stack, t_list *node);
+int			shortest_way(t_app *app, t_list *node, t_list *target);
+t_list		*node_at_idx(t_stack *stack, int idx);
 
 /*____actions____*/
 int			index_of(t_stack *stack, t_list *node);
