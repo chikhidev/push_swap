@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sort3.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/20 18:22:27 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/04/20 18:23:17 by abchikhi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/push_swap.h"
 
 t_list	*min(t_stack *stack)
@@ -88,7 +76,7 @@ t_list	*bigger_and_close(t_stack *stack, int num)
 	return (close_one);
 }
 
-int	is_in_top_mid(t_stack *stack, t_list *node)
+int	in_top(t_stack *stack, t_list *node)
 {
 	int	len;
 	int	idx;
