@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:57:04 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/04/20 20:58:12 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:09:44 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@
 # define MAGENTA "\033[0;35m"
 # define RESET "\033[0m"
 
-# define INT_MAX 2147483647
-# define INT_MIN -2147483648
+# ifndef INT_MAX
+#  define INT_MAX 2147483647
+# endif
+
+# ifndef INT_MIN
+#  define INT_MIN -2147483648
+# endif
 
 # include "../libft/libft.h"
 

@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 18:01:50 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/04/20 18:04:49 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:05:29 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	helper(t_app *app, char *line)
 		free(line);
 		line = get_next_line(STDIN_FILENO, 1);
 		free(line);
-		error(&app);
+		error(app);
 	}
 }
 
@@ -97,7 +97,6 @@ void	handle_input(t_app *app)
 int	main(int ac, char **av)
 {
 	t_app	app;
-	char	*line;
 
 	if (ac < 2)
 		return (0);

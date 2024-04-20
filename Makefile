@@ -58,7 +58,7 @@ $(GNL): get_next_line/get_next_line.c
 
 clean:
 	@echo "$(RED)Cleaning object files 🌬...$(RESET)"
-	@rm -f $(OBJ) $(LIBFT) $(GNL)
+	@rm -f $(OBJ) $(LIBFT) $(GNL) $(BOBJ)
 	@make -C libft clean
 
 fclean: clean
