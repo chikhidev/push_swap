@@ -46,3 +46,13 @@ void    move_to_top(t_app *app, t_stack *stack, t_list *node, int *moves_counter
         }
     }
 }
+
+
+/**
+ * 5        34
+ * 6        23
+ * 42       -13
+ * 83       60
+* -234      -89
+ * 24
+*/

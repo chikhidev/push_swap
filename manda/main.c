@@ -11,18 +11,15 @@ void    init(t_app *app)
 int is_sorted(t_stack *stack)
 {
     t_list *current;
-    t_list *prev;
 
     if (ft_lstsize(stack->head) < 2)
         return (1);
 
-    prev = stack->head;
-    current = stack->head->next;
-    while (current)
+    current = stack->head;
+    while (current->next)
     {
-        if (*(int *)prev->content > *(int *)current->content)
+        if (*(int *)current->content > *(int *)current->next->content)
             return (0);
-        prev = current;
         current = current->next;
     }
     return (1);

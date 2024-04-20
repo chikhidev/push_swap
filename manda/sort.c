@@ -72,7 +72,7 @@ t_list *smaller_and_close(t_stack *stack ,int num)
     int closest_value;
     int curr_value;
 
-    close_one = stack->head;
+    close_one = NULL;
     closest_value = INT_MIN;
     curr = stack->head;
     while (curr)
@@ -85,19 +85,88 @@ t_list *smaller_and_close(t_stack *stack ,int num)
         }
         curr = curr->next;
     }
+
+    if ((!close_one) && (stack->head))
+        close_one = max(stack);
     return close_one;
 }
 
-int shortest_way(t_stack *stack, t_list *node)
+t_list *bigger_and_close(t_stack *stack ,int num)
 {
-    int index;
-    int size;
+    t_list *close_one;
+    t_list *curr;
+    int closest_value;
+    int curr_value;
 
-    size = ft_lstsize(stack->head);
-    index = index_of(stack, node);
-    if (index > size / 2)
-        return (size - index);
-    return (index);
+    close_one = NULL;
+    closest_value = INT_MAX;
+    curr = stack->head;
+    while (curr)
+    {
+        curr_value = *(int *)curr->content;
+        if (curr_value > num && curr_value < closest_value)
+        {
+            close_one = curr;
+            closest_value = curr_value;
+        }
+        curr = curr->next;
+    }
+
+    if ((!close_one) && (stack->head))
+        close_one = min(stack);
+    return close_one;
+}
+
+int is_in_top_mid(t_stack *stack, t_list *node)
+{
+    int len;
+    int idx;
+
+    len = ft_lstsize(stack->head);
+    idx = index_of(stack, node);
+    if (idx < len / 2)
+        return (1);
+    return (0);
+}
+
+int shortest_way(t_app *app, t_list *node, t_list *target)
+{
+    int mvs;
+    int len[2];
+    int node_idx;
+    int target_idx;
+
+    len[0] = ft_lstsize(app->stack_a->head);
+    len[1] = ft_lstsize(app->stack_b->head);
+    node_idx = index_of(app->stack_a, node);
+    target_idx = index_of(app->stack_b, target);
+
+
+    if (node_idx == 0 && target_idx == 0)
+        return (0);
+
+    if (is_in_top_mid(app->stack_a, node) &&
+        is_in_top_mid(app->stack_b, target))
+    {
+        //logic of the shortest way to have the target and the node in top of both stacks
+        mvs = node_idx > target_idx ? node_idx : target_idx;
+    }
+    else if (!is_in_top_mid(app->stack_a, node) &&
+             !is_in_top_mid(app->stack_b, target))
+    {
+        //logic of the shortest way to have the target and the node in top both stacks but this time they are in the bottom mid range of both of the stacks
+        mvs = (len[1] - target_idx) > (len[0] - node_idx) ? (len[1] - target_idx) : (len[0] - node_idx);
+    }
+    else
+    {
+        //logic
+        if (is_in_top_mid(app->stack_a, node) && !is_in_top_mid(app->stack_b, target))
+            mvs = node_idx + len[1] - target_idx;
+        else
+            mvs = target_idx + len[0] - node_idx;
+    }
+    
+    return (mvs);
 }
 
 t_list  *node_at_idx(t_stack *stack, int idx)
@@ -115,6 +184,35 @@ t_list  *node_at_idx(t_stack *stack, int idx)
     return (node);
 }
 
+void    print_stacks(t_app *app)
+{
+    t_list *a;
+    t_list *b;
+
+    a = app->stack_a->head;
+    b = app->stack_b->head;
+
+    printf(MAGENTA"stack a:\tstack b:\n");
+    while (a || b)
+    {
+        if (a)
+        {
+            printf("%d\t\t", *(int *)a->content);
+            a = a->next;
+        }
+        else
+            printf("\t\t");
+        if (b)
+        {
+            printf("%d\n", *(int *)b->content);
+            b = b->next;
+        }
+        else
+            printf("\n");
+    }
+    write(1, RESET, ft_strlen(RESET));
+}
+
 void    sort_logic(t_app *app)
 {
     t_target target;
@@ -123,24 +221,26 @@ void    sort_logic(t_app *app)
     int     idx;
     t_list  *min_mvs_node;
     int     min_moves;
+    int     len[2];
 
     push_b(app->stack_a, app->stack_b, 1);
     push_b(app->stack_a, app->stack_b, 1);
 
-    while (app->stack_a->head)
+    // print_stacks(app);//---------------------------------------------
+
+    while (ft_lstsize(app->stack_a->head) > 3)
     {
         tmp = app->stack_a->head;
         idx = 0;
         while (tmp)
         {
             target.target = smaller_and_close(app->stack_b, *(int *)tmp->content);
-            target.moves =  shortest_way(app->stack_b, target.target) +
-                            shortest_way(app->stack_a, tmp) + 1;
+            target.moves =  shortest_way(app, tmp, target.target);
+            // printf("to go to %d from %d it takes %d moves\n", *(int *)target.target->content, *(int *)tmp->content, target.moves);
             moves[idx] = target.moves;
             tmp = tmp->next;
             idx++;
         }
-
         idx = 0;
         min_mvs_node = app->stack_a->head;
         min_moves = INT_MAX;
@@ -154,20 +254,91 @@ void    sort_logic(t_app *app)
             idx++;
         }
 
-
+        // printf("so best move is to go to %d from %d takes %d\n", *(int *)target.target->content, *(int *)min_mvs_node->content, min_moves);
         target.target = smaller_and_close(app->stack_b, *(int *)min_mvs_node->content);
-        move_to_top(app, app->stack_b, target.target, NULL);
-        move_to_top(app, app->stack_a, min_mvs_node, NULL);
+
+        len[0] = ft_lstsize(app->stack_a->head);
+        len[1] = ft_lstsize(app->stack_b->head);
+
+        int mvs = 0;
+
+        if (index_of(app->stack_b, target.target) >= (len[1] / 2) &&
+            index_of(app->stack_a, min_mvs_node) >= (len[0] / 2))
+        {
+            while (app->stack_a->head != min_mvs_node && app->stack_b->head != target.target)
+            {
+                reverse_rotate_ab(app->stack_a, app->stack_b, 1);
+                mvs++;
+            }
+
+            while (app->stack_a->head != min_mvs_node)
+            {
+                reverse_rotate_a(app->stack_a, 1);
+                mvs++;
+            }
+
+            while (app->stack_b->head != target.target)
+            {
+                reverse_rotate_b(app->stack_b, 1);
+                mvs++;
+            }
+        }
+        else if (index_of(app->stack_b, target.target) < len[1] / 2 &&
+                 index_of(app->stack_a, min_mvs_node) < len[0] / 2)
+        {
+            while (app->stack_a->head != min_mvs_node && app->stack_b->head != target.target)
+            {
+                rotate_ab(app->stack_a, app->stack_b, 1);
+                mvs++;
+            }
+
+            while (app->stack_a->head != min_mvs_node)
+            {
+                rotate_a(app->stack_a, 1);
+                mvs++;
+            }
+
+            while (app->stack_b->head != target.target)
+            {
+                rotate_b(app->stack_b, 1);
+                mvs++;
+            }
+        }
+        else if (index_of(app->stack_b, target.target) == 1 &&
+                    index_of(app->stack_a, min_mvs_node) == 1)
+        {
+            swap_ab(app->stack_a, app->stack_b, 1);
+            mvs++;   
+        }
+
+        move_to_top(app, app->stack_a, min_mvs_node, &mvs);
+        move_to_top(app, app->stack_b, target.target, &mvs);
+
+        // printf("mvs took: %d\n", mvs);
+        // printf("expected mvs: %d\n", target.moves);
+
         push_b(app->stack_a, app->stack_b, 1);
+        // print_stacks(app);//---------------------------------------------
     }
+
+    sort_three(app);
 
     while (app->stack_b->head)
     {
-        t_list *max_node;
-
-        max_node = max(app->stack_b);
-        move_to_top(app, app->stack_b, max_node, NULL);
+        target.target = bigger_and_close(app->stack_a, *(int *)app->stack_b->head->content);
+        move_to_top(app, app->stack_a, target.target, NULL);
         push_a(app->stack_a, app->stack_b, 1);
+    }
+
+    if (index_of(app->stack_a, min(app->stack_a)) > ft_lstsize(app->stack_a->head) / 2)
+    {
+        while (app->stack_a->head != min(app->stack_a))
+            reverse_rotate_a(app->stack_a, 1);
+    }
+    else
+    {
+        while (app->stack_a->head != min(app->stack_a))
+            rotate_a(app->stack_a, 1);
     }
 }
 

@@ -14,6 +14,8 @@
         "span": "c",
         "regex": "c",
         "chrono": "c",
-        "functional": "c"
-    }
+        "functional": "c",
+        "variant": "c"
+    },
+    "workbench.iconTheme": "mc-dp-icons"
 }
