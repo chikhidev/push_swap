@@ -38,7 +38,7 @@ typedef struct s_app
 /*____________prototypes____________*/
 
 /*error*/
-void    error(t_app *app, char *msg);
+void    error(t_app *app);
 void    free_stacks(t_app *app);
 
 /*validation*/

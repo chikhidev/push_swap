@@ -13,11 +13,9 @@ void    free_stacks(t_app *app)
  * @param stack_a stack a
  * @param stack_b stack b
 */
-void    error(t_app *app, char *msg)
+void    error(t_app *app)
 {
     free_stacks(app);
-    write(2, "Error: ", 8);
-    write(2, msg, ft_strlen(msg));
-    write(2, "\n", 1);
+    write(2, "Error\n", 6);
     exit(1);
 }

@@ -15,7 +15,8 @@
         "regex": "c",
         "chrono": "c",
         "functional": "c",
-        "variant": "c"
+        "variant": "c",
+        "push_swap_bonus.h": "c"
     },
     "workbench.iconTheme": "mc-dp-icons"
 }

@@ -29,10 +29,12 @@ int main(int ac, char **av)
 {
     t_app   app;
 
-    init(&app);
+    
     if (ac < 2)
-        error(&app, "Invalid number of arguments\n");
-    else if (ac == 2)
+        return (0);
+
+    init(&app);
+    if (ac == 2)
         split_and_fill_stack(&app, av);
     else
         fill_stack_a(&app, ac, av, 1);

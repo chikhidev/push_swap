@@ -260,7 +260,6 @@ void    sort_logic(t_app *app)
         len[0] = ft_lstsize(app->stack_a->head);
         len[1] = ft_lstsize(app->stack_b->head);
 
-        int mvs = 0;
 
         if (index_of(app->stack_b, target.target) >= (len[1] / 2) &&
             index_of(app->stack_a, min_mvs_node) >= (len[0] / 2))
@@ -268,19 +267,16 @@ void    sort_logic(t_app *app)
             while (app->stack_a->head != min_mvs_node && app->stack_b->head != target.target)
             {
                 reverse_rotate_ab(app->stack_a, app->stack_b, 1);
-                mvs++;
             }
 
             while (app->stack_a->head != min_mvs_node)
             {
                 reverse_rotate_a(app->stack_a, 1);
-                mvs++;
             }
 
             while (app->stack_b->head != target.target)
             {
                 reverse_rotate_b(app->stack_b, 1);
-                mvs++;
             }
         }
         else if (index_of(app->stack_b, target.target) < len[1] / 2 &&
@@ -289,33 +285,27 @@ void    sort_logic(t_app *app)
             while (app->stack_a->head != min_mvs_node && app->stack_b->head != target.target)
             {
                 rotate_ab(app->stack_a, app->stack_b, 1);
-                mvs++;
             }
 
             while (app->stack_a->head != min_mvs_node)
             {
                 rotate_a(app->stack_a, 1);
-                mvs++;
             }
 
             while (app->stack_b->head != target.target)
             {
                 rotate_b(app->stack_b, 1);
-                mvs++;
             }
         }
         else if (index_of(app->stack_b, target.target) == 1 &&
                     index_of(app->stack_a, min_mvs_node) == 1)
         {
             swap_ab(app->stack_a, app->stack_b, 1);
-            mvs++;   
         }
 
-        move_to_top(app, app->stack_a, min_mvs_node, &mvs);
-        move_to_top(app, app->stack_b, target.target, &mvs);
+        move_to_top(app, app->stack_a, min_mvs_node, NULL);
+        move_to_top(app, app->stack_b, target.target, NULL);
 
-        // printf("mvs took: %d\n", mvs);
-        // printf("expected mvs: %d\n", target.moves);
 
         push_b(app->stack_a, app->stack_b, 1);
         // print_stacks(app);//---------------------------------------------
