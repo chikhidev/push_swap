@@ -5,19 +5,19 @@
  * @param stack_a stack a
  * @details swaps the first 2 elements at the top of stack a
 */
-void    swap_a(t_stack *stack_a, int print)
+void	swap_a(t_stack *stack_a, int print)
 {
-    void  *head_content;
-    void  *next_content;
+	void	*head_content;
+	void	*next_content;
 
-    if (ft_lstsize(stack_a->head) < 2)
-        return ;
-    head_content = stack_a->head->content;
-    next_content = stack_a->head->next->content;
-    stack_a->head->content = next_content;
-    stack_a->head->next->content = head_content;
-    if (print)
-        write(1, "sa\n", 3);
+	if (ft_lstsize(stack_a->head) < 2)
+		return ;
+	head_content = stack_a->head->content;
+	next_content = stack_a->head->next->content;
+	stack_a->head->content = next_content;
+	stack_a->head->next->content = head_content;
+	if (print)
+		write(1, "sa\n", 3);
 }
 
 /**
@@ -25,19 +25,19 @@ void    swap_a(t_stack *stack_a, int print)
  * @param stack_b stack b
  * @details swaps the first 2 elements at the top of stack b
 */
-void    swap_b(t_stack *stack_b, int print)
+void	swap_b(t_stack *stack_b, int print)
 {
-    void  *head_content;
-    void  *next_content;
+	void	*head_content;
+	void	*next_content;
 
-    if (ft_lstsize(stack_b->head) < 2)
-        return ;
-    head_content = stack_b->head->content;
-    next_content = stack_b->head->next->content;
-    stack_b->head->content = next_content;
-    stack_b->head->next->content = head_content;
-    if (print)
-        write(1, "sb\n", 3);
+	if (ft_lstsize(stack_b->head) < 2)
+		return ;
+	head_content = stack_b->head->content;
+	next_content = stack_b->head->next->content;
+	stack_b->head->content = next_content;
+	stack_b->head->next->content = head_content;
+	if (print)
+		write(1, "sb\n", 3);
 }
 
 /**
@@ -47,10 +47,10 @@ void    swap_b(t_stack *stack_b, int print)
  * @note swap_ab = swap_a + swap_b
  * @details swaps the first 2 elements at the top of stack a and stack b
 */
-void    swap_ab(t_stack *stack_a, t_stack *stack_b, int print)
+void	swap_ab(t_stack *stack_a, t_stack *stack_b, int print)
 {
-    swap_a(stack_a, 0);
-    swap_b(stack_b, 0);
-    if (print)
-        write(1, "ss\n", 3);
+	swap_a(stack_a, 0);
+	swap_b(stack_b, 0);
+	if (print)
+		write(1, "ss\n", 3);
 }
