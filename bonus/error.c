@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/20 18:01:48 by abchikhi          #+#    #+#             */
+/*   Updated: 2024/04/20 18:11:44 by abchikhi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
 int	is_num(char *str)
@@ -23,9 +35,9 @@ int	is_overflowed_num(char *expected, int actual)
 	got = ft_itoa(actual);
 	if (!got)
 		return (1);
-	if ((ft_strncmp(expected, got, ft_strlen(expected)) != 0 &&
-			(ft_strlen(expected) == ft_strlen(got))) ||
-		ft_strlen(expected) != ft_strlen(got))
+	if ((ft_strncmp(expected, got, ft_strlen(expected)) != 0
+			&& (ft_strlen(expected) == ft_strlen(got)))
+		|| ft_strlen(expected) != ft_strlen(got))
 	{
 		free(got);
 		return (1);

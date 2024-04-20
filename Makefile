@@ -10,9 +10,11 @@ SRC = 	manda/main.c \
 		manda/error.c \
 		manda/validation.c \
 		manda/stack.c \
-		manda/sort.c \
 		manda/actions.c \
-		manda/sort2.c
+		manda/sort.c \
+		manda/sort2.c \
+		manda/sort3.c \
+		manda/sort4.c
 
 BSRC = bonus/main.c \
 		bonus/error.c \
@@ -60,5 +62,5 @@ clean:
 	@make -C libft clean
 
 fclean: clean
-	@echo "Full cleaning $(NAME) 🌪..."
-	@rm -f $(NAME)
+	@echo "Full cleaning 🌪..."
+	@rm -f $(NAME) $(BONUS)
