@@ -29,15 +29,14 @@ int main(int ac, char **av)
 {
     t_app   app;
 
+    init(&app);
     if (ac < 2)
         error(&app, "Invalid number of arguments\n");
-
     else if (ac == 2)
-        return (0);
+        split_and_fill_stack(&app, av);
+    else
+        fill_stack_a(&app, ac, av, 1);
 
-    init(&app);
-
-    fill_stack_a(&app, ac, av);
     if (is_sorted(app.stack_a))
     {
         free_stacks(&app);
@@ -46,15 +45,6 @@ int main(int ac, char **av)
 
 
     sort_stack(&app);
-
-    // printf("_____________\nafter sort--------------\n");
-
-    // for (t_list *current = app.stack_a->head; current; current = current->next)
-    // {
-    //     printf("%d\n", *(int *)current->content);
-    // }
-
-    // is_sorted(app.stack_a) ? printf(GREEN"OK\n"RESET) : printf(RED"KO\n"RESET);
 
     free_stacks(&app);
 

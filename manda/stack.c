@@ -44,12 +44,12 @@ int is_in_stack(t_stack *stack, int num)
  * @param stack_a The stack to fill.
  * @param stack_b The other stack.
 */
-void    fill_stack_a(t_app *app, int ac, char **av)
+void    fill_stack_a(t_app *app, int ac, char **av, int start)
 {
     int     curr;
     int     i;
 
-    i = 1;
+    i = start;
     while (i < ac)
     {
         if (!is_num(av[i])) error(app, "Invalid argument");
@@ -59,4 +59,28 @@ void    fill_stack_a(t_app *app, int ac, char **av)
         add_num(app, app->stack_a, curr);
         i++;
     }
+}
+
+void    split_and_fill_stack(t_app *app, char **av)
+{
+    char **splitted;
+    int  i;
+
+    splitted = ft_split(av[1], ' ');
+    if (!splitted)
+        error(app, "Split failed");
+
+    i = 0;
+    while (splitted[i])
+        i++;
+
+    fill_stack_a(app, i, splitted, 0);
+
+    i = 0;
+    while (splitted[i])
+    {
+        free(splitted[i]);
+        i++;
+    }
+    free(splitted);
 }

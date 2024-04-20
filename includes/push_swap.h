@@ -48,7 +48,8 @@ int     is_sorted(t_stack *stack);
 
 /*stack*/
 void    add_num(t_app *app, t_stack *stack, int num);
-void    fill_stack_a(t_app *app, int ac, char **av);
+void    fill_stack_a(t_app *app, int ac, char **av, int start);
+void    split_and_fill_stack(t_app *app, char **av);
 
 /*sort*/
 void    sort_stack(t_app *app);
