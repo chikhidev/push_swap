@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 18:01:50 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/04/21 14:20:20 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/04/21 20:54:40 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,12 @@ void	init(t_app *app)
 	app->stack_b->head = NULL;
 }
 
-int	is_sorted(t_stack *stack)
+void	print_res(t_app *app)
 {
-	t_list	*current;
-
-	if (ft_lstsize(stack->head) < 2)
-		return (1);
-	current = stack->head;
-	while (current->next)
-	{
-		if (*(int *)current->content > *(int *)current->next->content)
-			return (0);
-		current = current->next;
-	}
-	return (1);
+	if (is_sorted(app->stack_a))
+		write(1, "OK\n", 3);
+	else
+		write(1, "KO\n", 3);
 }
 
 void	helper(t_app *app, char *line)
@@ -117,10 +109,7 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	handle_input(&app);
-	if (is_sorted(app.stack_a) && app.stack_b->head == NULL)
-		write(1, "OK\n", 3);
-	else
-		write(1, "KO\n", 3);
+	print_res(&app);
 	free_stacks(&app);
 	return (0);
 }

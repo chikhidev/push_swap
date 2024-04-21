@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:57:04 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/04/21 14:12:22 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/04/21 20:56:32 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define RED "\033[0;31m"
-# define GREEN "\033[0;32m"
-# define YELLOW "\033[0;33m"
-# define BLUE "\033[0;34m"
-# define MAGENTA "\033[0;35m"
-# define RESET "\033[0m"
+# include "../libft/libft.h"
 
 # ifndef INT_MAX
 #  define INT_MAX 2147483647
@@ -30,8 +25,6 @@
 # ifndef INT_MIN
 #  define INT_MIN -2147483648
 # endif
-
-# include "../libft/libft.h"
 
 /*____________structures____________*/
 
@@ -66,7 +59,6 @@ int			is_sorted(t_stack *stack);
 
 /*stack*/
 void		add_num(t_app *app, t_stack *stack, int num);
-void		fill_stack_a(t_app *app, int ac, char **av, int start);
 void		split_and_fill_stack(t_app *app, char *param);
 
 /*sort*/

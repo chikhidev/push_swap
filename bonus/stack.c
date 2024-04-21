@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 18:01:53 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/04/21 14:27:13 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/04/21 20:56:14 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,20 @@ void	split_and_fill_stack(t_app *app, char *param)
 	}
 	free(app->split);
 	app->split = NULL;
+}
+
+int	is_sorted(t_stack *stack)
+{
+	t_list	*current;
+
+	if (ft_lstsize(stack->head) < 2)
+		return (1);
+	current = stack->head;
+	while (current->next)
+	{
+		if (*(int *)current->content > *(int *)current->next->content)
+			return (0);
+		current = current->next;
+	}
+	return (1);
 }
