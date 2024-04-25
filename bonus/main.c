@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 18:01:50 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/04/23 19:57:48 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/04/25 09:48:48 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,6 @@ int	main(int ac, char **av)
 		}
 	}
 	i = ft_lstsize(app.stack_a->head);
-	if (is_sorted(app.stack_a))
-	{
-		free_stacks(&app);
-		return (0);
-	}
 	handle_input(&app);
 	print_res(&app, i);
 	free_stacks(&app);
