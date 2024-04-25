@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:22:12 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/04/20 20:50:58 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:17:10 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_list	*smaller_and_close(t_stack *stack, int num)
 	while (curr)
 	{
 		curr_value = *(int *)curr->content;
-		if (curr_value < num && curr_value > closest_value)
+		if (curr_value <= num && curr_value >= closest_value)
 		{
 			close_one = curr;
 			closest_value = curr_value;
@@ -82,7 +82,7 @@ t_list	*bigger_and_close(t_stack *stack, int num)
 	while (curr)
 	{
 		curr_value = *(int *)curr->content;
-		if (curr_value > num && curr_value < closest_value)
+		if (curr_value >= num && curr_value <= closest_value)
 		{
 			close_one = curr;
 			closest_value = curr_value;

@@ -64,3 +64,5 @@ clean:
 fclean: clean
 	@echo "Full cleaning 🌪..."
 	@rm -f $(NAME) $(BONUS)
+
+re: fclean all
