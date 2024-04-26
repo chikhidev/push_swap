@@ -6,7 +6,7 @@
 /*   By: abchikhi <abchikhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 18:01:31 by abchikhi          #+#    #+#             */
-/*   Updated: 2024/04/25 21:38:34 by abchikhi         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:52:39 by abchikhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_overflowed_num(char *expected, int actual)
 	tmp = ft_itoa(actual);
 	if (!tmp)
 		return (1);
-	got = tmp + (expected[0] == '-');
+	got = tmp + (expected[0] == '-' && ft_strncmp(tmp, "0", 1) != 0);
 	expected += (expected[0] == '+');
 	expected += (expected[0] == '-');
 	i = 0;
